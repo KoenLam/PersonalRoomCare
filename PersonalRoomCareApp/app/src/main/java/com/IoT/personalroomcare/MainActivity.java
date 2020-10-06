@@ -1,0 +1,142 @@
+package com.IoT.personalroomcare;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.TextView;
+
+import java.util.Locale;
+
+
+enum Status {
+    GOOD,
+    MODERATE,
+    UNHEALTHY_LITE,
+    UNHEALTHY,
+    VERY_UNHEALTHY,
+    HAZARDOUS
+}
+
+public class MainActivity extends AppCompatActivity {
+
+    private CardView cardAQI;
+    private CardView cardHumidity;
+    private CardView cardTemperature;
+    private CardView cardStatus;
+    private Status s;
+    private ConstraintLayout layoutAQI;
+    private Window window;
+    private TextView valueAQI;
+    private TextView textAQI;
+    private TextView valueTemperature;
+    private TextView valueHumidity;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        cardAQI = findViewById(R.id.air_quality_index_card);
+        cardHumidity = findViewById(R.id.humidity_card);
+        cardTemperature = findViewById(R.id.temperature_card);
+        cardStatus = findViewById(R.id.recommendation_card);
+        layoutAQI = findViewById(R.id.air_quality_index_layout);
+        window = getWindow();
+
+        valueAQI = findViewById(R.id.aqi_status_value);
+        textAQI = findViewById(R.id.aqi_status_text);
+        valueTemperature = findViewById(R.id.temperature_value);
+        valueHumidity = findViewById(R.id.humidity_value);
+
+        s = Status.GOOD;
+        updateColors(s);
+
+        updateTemperature(25);
+        updateHumidity(80);
+        updateAQI(40);
+
+        cardStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Temporary way to change the color of the views
+                s = Status.values()[(s.ordinal()+1) % (Status.values().length)];
+                updateColors(s);
+            }
+        });
+
+    }
+
+    private void updateColors(Status s) {
+        int color;
+        int colorLight;
+        int colorDark;
+        Drawable gradient;
+        switch (s) {
+            case MODERATE:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_moderate, null);
+                break;
+
+            case UNHEALTHY_LITE:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_unhealthy_lite, null);
+                break;
+
+            case UNHEALTHY:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_unhealthy, null);
+                break;
+
+            case VERY_UNHEALTHY:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_very_unhealthy, null);
+                break;
+
+            case HAZARDOUS:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_hazardous, null);
+                break;
+
+            default:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_good, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_good_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_good_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_good, null);
+        }
+        this.cardTemperature.setCardBackgroundColor(colorLight);
+        this.cardHumidity.setCardBackgroundColor(colorLight);
+        this.cardStatus.setCardBackgroundColor(colorLight);
+        this.layoutAQI.setBackground(gradient);
+        this.window.setStatusBarColor(colorDark);
+    }
+
+    private void updateTemperature(int temperature) {
+        this.valueTemperature.setText(String.format(Locale.getDefault(),"%d°C", temperature));
+    }
+
+    private void updateHumidity(int humidity) {
+        this.valueHumidity.setText(String.format(Locale.getDefault(),"%d%%", humidity));
+    }
+
+    private void updateAQI(int AQI) {
+        this.valueAQI.setText(String.format(Locale.getDefault(),"%d", AQI));
+    }
+
+}

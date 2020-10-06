@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_margin">16dp</dimen>
+    <dimen name="card_corder_radius">4dp</dimen>
+    <dimen name="card_height">120dp</dimen>
+    <dimen name="label_size">16sp</dimen>
+    <dimen name="status_value_size">48sp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+</resources>

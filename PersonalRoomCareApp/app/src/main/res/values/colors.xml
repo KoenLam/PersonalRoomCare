@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="colorPrimary">#7e57c2</color>-->
+<!--    <color name="colorPrimaryDark">#4d2c91</color>-->
+<!--    <color name="colorAccent">#b085f5</color>-->
+    <color name="colorPrimary">@android:color/black</color>
+    <color name="colorPrimaryDark">@android:color/black</color>
+    <color name="colorAccent">@android:color/white</color>
+<!--    <color name="AQI_good">#05d2ff</color>-->
+<!--    <color name="AQI_moderate">#FBC02D</color>-->
+<!--    <color name="AQI_unhealthy_lite">#ff7e5a</color>-->
+<!--    <color name="AQI_unhealthy">#BF360C</color>-->
+<!--    <color name="AQI_very_unhealthy">#7B1FA2</color>-->
+<!--    <color name="AQI_hazardous">#D50000</color>-->
+    <color name="AQI_good">#42a5f5</color>
+    <color name="AQI_good_light">#80d6ff</color>
+    <color name="AQI_good_dark">#0077c2</color>
+
+    <color name="AQI_moderate">#f9a825</color>
+    <color name="AQI_moderate_light">#fdd835</color>
+    <color name="AQI_moderate_dark">#c49000</color>
+
+    <color name="AQI_unhealthy_lite">#ff9800</color>
+    <color name="AQI_unhealthy_lite_light">#ffc947</color>
+    <color name="AQI_unhealthy_lite_dark">#c66900</color>
+
+    <color name="AQI_unhealthy">#ef5350</color>
+    <color name="AQI_unhealthy_light">#ff867c</color>
+    <color name="AQI_unhealthy_dark">#b61827</color>
+
+    <color name="AQI_very_unhealthy">#7e57c2</color>
+    <color name="AQI_very_unhealthy_light">#b085f5</color>
+    <color name="AQI_very_unhealthy_dark">#4d2c91</color>
+
+    <color name="AQI_hazardous">#c62828</color>
+    <color name="AQI_hazardous_light">#ff5f52</color>
+    <color name="AQI_hazardous_dark">#8e0000</color>
+
+
+</resources>

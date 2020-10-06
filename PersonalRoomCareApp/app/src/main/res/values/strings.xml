@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Personal Room Care</string>
+    <string name="air_quality_index_label">Air Quality Index</string>
+    <string name="temperature_text">Temperature</string>
+    <string name="humidity_label">Humidity</string>
+    <string name="status_label">Status</string>
+    <string name="status_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu lorem nec risus pulvinar vehicula tempor quis justo. Morbi et nunc libero. Morbi cursus lorem sem, non maximus tellus lacinia id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc eu diam facilisis, mattis metus interdum, dignissim arcu. In finibus nisl et quam cursus, hendrerit pretium felis vehicula. Proin feugiat nec justo a posuere. Nulla facilisi. Nulla ac bibendum ex. Donec vel metus dapibus, facilisis felis eget, ultricies dolor. Maecenas non massa viverra, sollicitudin ligula a, semper ipsum. Praesent volutpat augue vitae sapien iaculis eleifend. Integer lorem urna, elementum sed lobortis non, scelerisque vel mi.</string>
+</resources>
