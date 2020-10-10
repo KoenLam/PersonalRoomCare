@@ -1,24 +1,26 @@
-package com.IoT.personalroomcare;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+package com.IoT.personalroomcare.ui.dashboard;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.IoT.personalroomcare.R;
+//import com.IoT.personalroomcare.Status;
 
 import java.util.Locale;
-
 
 enum Status {
     GOOD,
@@ -29,7 +31,7 @@ enum Status {
     HAZARDOUS
 }
 
-public class MainActivity extends AppCompatActivity {
+public class DashboardFragment extends Fragment {
 
     private CardView cardAQI;
     private CardView cardHumidity;
@@ -44,51 +46,51 @@ public class MainActivity extends AppCompatActivity {
     private TextView valueHumidity;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+//    private DashboardViewModel dashboardViewModel;
 
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_dashboard, R.id.navigation_debug
-        ).build();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
-
-
-
-//        cardAQI = findViewById(R.id.air_quality_index_card);
-//        cardHumidity = findViewById(R.id.humidity_card);
-//        cardTemperature = findViewById(R.id.temperature_card);
-//        cardStatus = findViewById(R.id.recommendation_card);
-//        layoutAQI = findViewById(R.id.air_quality_index_layout);
-//        window = getWindow();
-//
-//        valueAQI = findViewById(R.id.aqi_status_value);
-//        textAQI = findViewById(R.id.aqi_status_text);
-//        valueTemperature = findViewById(R.id.temperature_value);
-//        valueHumidity = findViewById(R.id.humidity_value);
-//
-//        s = Status.GOOD;
-//        updateColors(s);
-//
-//        updateTemperature(25);
-//        updateHumidity(80);
-//        updateAQI(40);
-//
-//        cardStatus.setOnClickListener(new View.OnClickListener() {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+//        dashboardViewModel =
+//                ViewModelProviders.of(this).get(DashboardViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+//        final TextView textView = root.findViewById(R.id.text_dashboard);
+//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
 //            @Override
-//            public void onClick(View view) {
-//                // Temporary way to change the color of the views
-//                s = Status.values()[(s.ordinal()+1) % (Status.values().length)];
-//                updateColors(s);
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
 //            }
 //        });
 
+        cardAQI = root.findViewById(R.id.air_quality_index_card);
+        cardHumidity = root.findViewById(R.id.humidity_card);
+        cardTemperature = root.findViewById(R.id.temperature_card);
+        cardStatus = root.findViewById(R.id.recommendation_card);
+        layoutAQI = root.findViewById(R.id.air_quality_index_layout);
+//        window = root.getWindow();
+
+        valueAQI = root.findViewById(R.id.aqi_status_value);
+        textAQI = root.findViewById(R.id.aqi_status_text);
+        valueTemperature = root.findViewById(R.id.temperature_value);
+        valueHumidity = root.findViewById(R.id.humidity_value);
+
+        s = Status.GOOD;
+        updateColors(s);
+
+        updateTemperature(25);
+        updateHumidity(80);
+        updateAQI(40);
+
+        cardStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Temporary way to change the color of the views
+                s = Status.values()[(s.ordinal()+1) % (Status.values().length)];
+                updateColors(s);
+            }
+        });
+
+
+        return root;
     }
 
     private void updateColors(Status s) {
@@ -142,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         this.cardHumidity.setCardBackgroundColor(colorLight);
         this.cardStatus.setCardBackgroundColor(colorLight);
         this.layoutAQI.setBackground(gradient);
-        this.window.setStatusBarColor(colorDark);
+//        this.window.setStatusBarColor(colorDark);
     }
 
     private void updateTemperature(int temperature) {
