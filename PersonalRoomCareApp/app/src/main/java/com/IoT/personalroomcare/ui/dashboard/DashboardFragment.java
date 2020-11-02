@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.IoT.personalroomcare.MainActivity;
 import com.IoT.personalroomcare.R;
+import com.ficat.easyble.BleManager;
 //import com.IoT.personalroomcare.Status;
 
 import java.util.Locale;
@@ -44,6 +47,9 @@ public class DashboardFragment extends Fragment {
     private TextView textAQI;
     private TextView valueTemperature;
     private TextView valueHumidity;
+    private Button bleButton;
+    private BleManager manager;
+    private MainActivity mainAct;
 
 
 //    private DashboardViewModel dashboardViewModel;
@@ -88,6 +94,12 @@ public class DashboardFragment extends Fragment {
                 updateColors(s);
             }
         });
+
+        mainAct = (MainActivity)getActivity();
+        manager = mainAct.manager;
+
+        bleButton = root.findViewById(R.id.ble_btn);
+        bleButton.setOnClickListener(mainAct);
 
 
         return root;
@@ -147,15 +159,15 @@ public class DashboardFragment extends Fragment {
 //        this.window.setStatusBarColor(colorDark);
     }
 
-    private void updateTemperature(int temperature) {
+    public void updateTemperature(int temperature) {
         this.valueTemperature.setText(String.format(Locale.getDefault(),"%d°C", temperature));
     }
 
-    private void updateHumidity(int humidity) {
+    public void updateHumidity(int humidity) {
         this.valueHumidity.setText(String.format(Locale.getDefault(),"%d%%", humidity));
     }
 
-    private void updateAQI(int AQI) {
+    public void updateAQI(int AQI) {
         this.valueAQI.setText(String.format(Locale.getDefault(),"%d", AQI));
     }
 
