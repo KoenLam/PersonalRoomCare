@@ -1,4 +1,4 @@
-package com.IoT.personalroomcare.ui.debug;
+package com.IoT.personalroomcare.ui.info;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

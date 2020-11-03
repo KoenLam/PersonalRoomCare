@@ -7,7 +7,7 @@
         android:title="@string/title_dashboard" />
 
     <item
-        android:id="@+id/navigation_debug"
-        android:icon="@drawable/ic_debug"
-        android:title="@string/title_debug" />
+        android:id="@+id/navigation_info"
+        android:icon="@drawable/ic_info"
+        android:title="@string/title_info" />
 </menu>

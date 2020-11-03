@@ -1,4 +1,4 @@
-package com.IoT.personalroomcare.ui.debug;
+package com.IoT.personalroomcare.ui.info;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,11 +10,11 @@ import androidx.fragment.app.Fragment;
 
 import com.IoT.personalroomcare.R;
 
-public class DebugFragment extends Fragment {
+public class InfoFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_debug, container, false);
+        View root = inflater.inflate(R.layout.fragment_info, container, false);
 
         return root;
     }

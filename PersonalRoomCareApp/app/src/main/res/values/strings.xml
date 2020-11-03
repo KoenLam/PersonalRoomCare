@@ -4,9 +4,17 @@
     <string name="temperature_text">Temperature</string>
     <string name="humidity_label">Humidity</string>
     <string name="status_label">Status</string>
-    <string name="status_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu lorem nec risus pulvinar vehicula tempor quis justo. Morbi et nunc libero. Morbi cursus lorem sem, non maximus tellus lacinia id. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc eu diam facilisis, mattis metus interdum, dignissim arcu. </string>
+    <string name="status_text">Currently not connected to the ESP32. Click on the Connection card to start connecting. </string>
+
+    <string name="status_text_good">Air quality is considered satisfactory, and air pollution poses little or no risk.</string>
+    <string name="status_text_moderate">Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.</string>
+    <string name="status_text_unhealthy_lite">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</string>
+    <string name="status_text_unhealthy">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</string>
+    <string name="status_text_very_healthy">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
+    <string name="status_text_hazardous">Health alert: everyone may experience more serious health effects.</string>
+
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_debug">Debug</string>
+    <string name="title_info">Info</string>
     <string name="tips_turn_on_gps">Please turn on GPS before scanning</string>
     <string name="tips_go_setting_to_grant_location">Please go to settings to grant location permission manually</string>
 </resources>

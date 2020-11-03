@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_debug"
-        android:name="com.IoT.personalroomcare.ui.debug.DebugFragment"
-        android:label="@string/title_debug"
-        tools:layout="@layout/fragment_debug" />
+        android:id="@+id/navigation_info"
+        android:name="com.IoT.personalroomcare.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 
 </navigation>
