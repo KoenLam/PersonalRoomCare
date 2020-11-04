@@ -1,14 +1,17 @@
 package com.IoT.personalroomcare;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -56,7 +59,7 @@ enum ConnectionStatus {
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final static String TAG = "PRC";
-    private final static String esp32Name = "ESP32 UART Test";
+    private final static String esp32Name = "UART Service";
     private final static String serviceUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
     private final static String characteristicUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 
@@ -64,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Date> arrayTime = new ArrayList<>();
 
     private Status s;
-    private ConstraintLayout layoutAQI;
+//    private ConstraintLayout layoutAQI;
     private Window window;
     public TextView valueAQI;
     public TextView statusTextAQI;
@@ -315,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateDevice("NA");
             this.updateLabelAQI("NA");
             this.updateValueAQI(0);
+            this.updateColors();
         }
     }
 
@@ -406,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             updateLabelAQI("Hazardous");
         }
 
-
+        this.updateColors();
         this.updateRecommendation();
 
     }
@@ -428,4 +432,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.e(TAG, "Couldn't update the AQI label");
         }
     }
+
+    private void updateColors() {
+        int color;
+        int colorLight;
+        int colorDark;
+        Drawable gradient;
+        switch (this.s) {
+            case MODERATE:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_moderate_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_moderate, null);
+                break;
+
+            case UNHEALTHY_LITE:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_lite_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_unhealthy_lite, null);
+                break;
+
+            case UNHEALTHY:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_unhealthy_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_unhealthy, null);
+                break;
+
+            case VERY_UNHEALTHY:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_very_unhealthy_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_very_unhealthy, null);
+                break;
+
+            case HAZARDOUS:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_hazardous_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_hazardous, null);
+                break;
+
+            default:
+                color = ResourcesCompat.getColor(getResources(), R.color.AQI_good, null);
+                colorLight = ResourcesCompat.getColor(getResources(), R.color.AQI_good_light, null);
+                colorDark = ResourcesCompat.getColor(getResources(), R.color.AQI_good_dark, null);
+                gradient = ResourcesCompat.getDrawable(getResources(), R.drawable.gradient_good, null);
+        }
+
+        getWindow().setStatusBarColor(colorDark);
+
+        CardView connectionCard = findViewById(R.id.connection_card);
+        if(connectionCard != null) connectionCard.setCardBackgroundColor(color);
+
+        CardView recommendationCard = findViewById(R.id.recommendation_card);
+        if(recommendationCard != null) recommendationCard.setCardBackgroundColor(color);
+
+        CardView deviceCard = findViewById(R.id.device_card);
+        if(deviceCard != null) deviceCard.setCardBackgroundColor(color);
+
+        ConstraintLayout aqiLayout = findViewById(R.id.air_quality_index_layout);
+        if(aqiLayout != null) aqiLayout.setBackground(gradient);
+
+    }
+
+
 }

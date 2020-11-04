@@ -29,7 +29,7 @@ BLEServer *pServer = NULL;
 BLECharacteristic * pTxCharacteristic;
 bool deviceConnected = false;
 bool oldDeviceConnected = false;
-uint8_t txValue = 50;
+uint16_t txValue = 0;
 
 uint32_t counter = 0;
 
@@ -138,10 +138,18 @@ Serial.println(gasSensor.getRZeroCO2());
 delay(200);
 
     if (deviceConnected) {
-        pTxCharacteristic->setValue(sensorValueString);
+        // Send txValue when testing the full range of the app
+        // Send sensorValue to send the value of the sensor to the app
+        pTxCharacteristic->setValue(sensorValue);
+//        pTxCharacteristic->setValue(txValue); // Sending a test value to the app
+        
         pTxCharacteristic->notify();
-        //txValue++;
-		delay(10); // bluetooth stack will go into congestion, if too many packets are sent
+
+        // Reset the "test" value
+        if(txValue++ > 500) txValue = 0;
+        
+		    
+		    delay(10); // bluetooth stack will go into congestion, if too many packets are sent
 	}
 
     // disconnecting
