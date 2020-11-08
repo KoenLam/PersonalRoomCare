@@ -40,6 +40,9 @@ import java.util.Locale;
 
 import com.ficat.easyble.BleManager;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 
 enum Status {
     GOOD,
@@ -58,6 +61,7 @@ enum ConnectionStatus {
 }
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    // Hardcoded BLE connection values
     private final static String TAG = "PRC";
     private final static String esp32Name = "UART Service";
     private final static String serviceUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
@@ -67,18 +71,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<Date> arrayTime = new ArrayList<>();
 
     private Status s;
-//    private ConstraintLayout layoutAQI;
-    private Window window;
-    public TextView valueAQI;
-    public TextView statusTextAQI;
-    public TextView valueConnection;
-    public TextView valueDevice;
-    public TextView recommendationText;
 
     public BleManager manager;
     public BleDevice esp32 = null;
     public ConnectionStatus bleConnected = ConnectionStatus.OFF;
-    public ServiceInfo curService;
 
 
     @Override
@@ -93,32 +89,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ).build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         this.s = Status.NONE;
         initBleManager();
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        this.initUI();
-//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         BleManager.getInstance().destroy();
     }
-
-//    public void initUI() {
-//        this.valueAQI = findViewById(R.id.aqi_status_value);
-//        this.valueConnection = findViewById(R.id.connection_value);
-//        this.valueDevice = findViewById(R.id.device_value);
-//        this.recommendationText = findViewById(R.id.recommendation_text);
-//        this.statusTextAQI = findViewById(R.id.aqi_status_text);
-//    }
-
 
     private void initBleManager() {
         if(!BleManager.supportBle(this)) {
@@ -149,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.connection_card:
+                // Toggle BLE
                 if(bleConnected == ConnectionStatus.OFF) {
                     bleConnected = ConnectionStatus.CONNECTING;
                     updateConnection("...");
@@ -166,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initBleScan() {
+        // Init BLE
         if(!BleManager.isBluetoothOn()) {
             BleManager.toggleBluetooth(true);
         }
@@ -199,11 +182,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean isGpsOn() {
+        // Check if GPS is on
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     public void starScan() {
+        // Start BLE scanning
         manager.startScan(new BleScanCallback() {
             @Override
             public void onLeScan(BleDevice device, int rssi, byte[] scanRecord) {
@@ -223,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
                 Log.e(TAG, "scan finish");
-//                Toast.makeText(MainActivity.this, "Finished scanning", Toast.LENGTH_SHORT).show();
+
                 if(esp32 != null) {
                     Log.e(TAG, "Start connection");
                     updateConnectionText(true);
@@ -373,7 +358,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void updateAQI(int value) {
         this.updateDeviceUI(); // Ugly fix to UI when switching fragments
         Date currentTime = Calendar.getInstance().getTime();
-        int AQI = value;
+        int AQI = max(min(value, 500), 0);
 
         // Save the value to an array
         this.arrayAQI.add(AQI);
